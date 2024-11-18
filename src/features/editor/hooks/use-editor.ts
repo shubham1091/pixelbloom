@@ -1,5 +1,6 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { loadFabric } from "../utils/loadFabric";
+import { useAutoResize } from "./use-auto-resize";
 
 interface InitParams {
   initialCanvas: fabric.Canvas;
@@ -7,6 +8,10 @@ interface InitParams {
 }
 
 export const useEditor = () => {
+  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  useAutoResize({ canvas, container });
   const init = useCallback(
     async ({ initialCanvas, initialContainer }: InitParams) => {
       try {
@@ -44,11 +49,14 @@ export const useEditor = () => {
         initialCanvas.centerObject(initialWorkspace);
         initialCanvas.clipPath = initialWorkspace;
 
+        setCanvas(initialCanvas);
+        setContainer(initialContainer);
+
         const test = new fabric.Rect({
-            height: 100,
-            width: 100,
-            fill: "red",
-        })
+          height: 100,
+          width: 100,
+          fill: "red",
+        });
         initialCanvas.add(test);
         initialCanvas.centerObject(test);
 

@@ -1,9 +1,10 @@
+import EditorWrapper from '@/features/editor/components/EditorWraper'
 import React from 'react'
-import { Editor } from '@/features/editor/components/editor'
+
 
 const EditorProjectIdPage = () => {
   return (
-    <Editor />
+    <EditorWrapper />
   )
 }
 
